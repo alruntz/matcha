@@ -1,0 +1,47 @@
+<head>
+	<meta charset="utf-8"/>
+	<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<p id="compteur"></p>
+</body>
+<script>
+var towns  = ["paris", "lyon", "marseille", "nancy", "toulon", "lille", "strasbourg", "bordeaux", "nice", "nantes", "montpellier"];
+for (i = 0; i < 500; i++)
+{
+	(function (i) {
+		setTimeout(function () {
+			$.ajax({
+				url: 'https://randomuser.me/api/',
+				dataType: 'json',
+				success: function(data1) {
+					var town = towns[Math.floor(Math.random() * towns.length)];
+					data1.results[0].location.city = town;
+					$.ajax({
+						url: "http://www.mapquestapi.com/geocoding/v1/address?key=THXRwZZJh3pJggG4nCCtA1c7EaFC2FEM&location=" + town,
+						dataType: 'json',
+						success: function(data2) {
+							$.ajax({
+								method: "POST",
+								url: "create_profiles.php",
+								data: { user_json: JSON.stringify(data1),
+										coord: data2.results[0].locations[0].latLng.lat
+											+ "," + data2.results[0].locations[0].latLng.lng}
+							})
+							.done(function(data3) {
+								$("#compteur").text(i.toString() + "/500");
+								//alert(data3);
+							});
+						}
+					});
+				}
+			});
+		}, 500 * i);
+	})(i);
+}
+
+</script>

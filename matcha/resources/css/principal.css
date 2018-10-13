@@ -1,0 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background: #2d2c41;
+    font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
+}
